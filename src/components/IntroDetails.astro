@@ -30,7 +30,7 @@ const cities = course.cities.map((c) => ({
     !compact && (
       <div class="mt-5">
         <p class="sr-only">{t('intro.cities')}</p>
-        <ul class="grid grid-cols-2 gap-2 sm:grid-cols-4" role="list">
+        <ul class="grid grid-cols-2 gap-2 sm:grid-cols-3" role="list">
           {cities.map((c) => (
             <li class="rounded-xl border border-line px-3 py-2 text-sm">
               <span class="block text-muted">{c.name}</span>

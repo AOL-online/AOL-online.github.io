@@ -10,8 +10,6 @@ const ru = {
   'skip': 'Перейти к содержанию',
   'header.brand.sub': 'Art of Living · онлайн на русском',
   'header.cta': 'Записаться',
-  'theme.toDark': 'Включить тёмную тему',
-  'theme.toLight': 'Включить светлую тему',
 
   'cta.register': 'Записаться на курс',
   'cta.intro': 'Записаться бесплатно',

@@ -1,5 +1,5 @@
 // Client script: fills elements [data-local-times] with the visitor's local time.
-// Without JS these elements stay hidden (.js-only) and the build-time city tables remain.
+// Without JS these elements stay hidden (hidden attribute) and the build-time city tables remain.
 
 interface Item {
   s: string;

@@ -30,24 +30,24 @@ export const course: Course = {
     { date: '2026-11-15', start: '2026-11-15T18:00:00+03:00', durationMin: 180 },
   ],
 
+  // West -> east. Minsk and Moscow share one row (same time, UTC+3).
   cities: [
+    { name: 'Лос-Анджелес', tz: 'America/Los_Angeles' },
+    { name: 'Нью-Йорк', tz: 'America/New_York' },
     { name: 'Загреб', tz: 'Europe/Zagreb' },
     { name: 'Киев', tz: 'Europe/Kyiv' },
-    { name: 'Минск', tz: 'Europe/Minsk' },
-    { name: 'Москва', tz: 'Europe/Moscow' },
+    { name: 'Минск / Москва', tz: 'Europe/Moscow' },
     { name: 'Астана', tz: 'Asia/Almaty' }, // Kazakhstan: one zone UTC+5 since 2024
-    { name: 'Нью-Йорк', tz: 'America/New_York' },
-    { name: 'Лос-Анджелес', tz: 'America/Los_Angeles' },
   ],
 
-  // Registration per country — any registration can be chosen, wherever the person lives.
+  // Registration per country, west -> east — any registration can be chosen, wherever the person lives.
   countries: [
-    { code: 'by', name: 'Беларусь', url: 'https://www.artofliving.by/page287686309.html' },
     { code: 'us', name: 'США', url: 'https://members.us.artofliving.org/us-en/course/a04Vu00000vFvoLIAS?ctype=811569' },
+    { code: 'hr', name: 'Хорватия', url: 'https://aolreg.org/c/HRC1294666' },
     { code: 'ua', name: 'Украина', url: 'https://forms.gle/eohsSAGGyEp4ZhXe8' },
+    { code: 'by', name: 'Беларусь', url: 'https://www.artofliving.by/page287686309.html' },
     { code: 'ru', name: 'Россия', url: 'https://artofliving.ru/happiness_online?streamId=518228' },
     { code: 'kz', name: 'Казахстан', url: 'https://aolreg.org/KZC1127764' },
-    { code: 'hr', name: 'Хорватия', url: 'https://aolreg.org/c/HRC1294666' },
   ],
 
   // Free intro talk. TODO: registration URL — set registration to { kind: 'link', url: 'https://…' }

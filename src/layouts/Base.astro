@@ -19,20 +19,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Theme before first paint (no flash): saved choice wins, otherwise the system setting via CSS. -->
-    <script is:inline>
-      (function () {
-        var d = document.documentElement;
-        d.classList.add('js');
-        try {
-          var s = localStorage.getItem('theme');
-          if (s === 'light' || s === 'dark') d.setAttribute('data-theme', s);
-        } catch (e) {}
-      })();
-    </script>
+    <!-- Light/dark theme follows the browser/system setting only (prefers-color-scheme). -->
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#161615" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#16222c" media="(prefers-color-scheme: dark)" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

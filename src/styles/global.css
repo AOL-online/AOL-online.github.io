@@ -59,17 +59,11 @@
 }
 
 @layer base {
-  :root[data-theme='dark'] {
-    --color-ink: #f3f1ec;
-    --color-paper: #16222c;
-    --color-surface: #1f2f3c;
-    --color-line: #34495a;
-    --color-muted: #b8c2ca;
-    --color-accent-text: #ffa64d;
-    color-scheme: dark;
+  :root {
+    color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
+    :root {
       --color-ink: #f3f1ec;
       --color-paper: #16222c;
       --color-surface: #1f2f3c;
@@ -80,9 +74,6 @@
     }
   }
 
-  :root {
-    color-scheme: light;
-  }
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
@@ -112,24 +103,15 @@
   [id] {
     scroll-margin-top: 5rem;
   }
-  html:not(.js) .js-only {
-    display: none !important;
-  }
-  /* Theme-specific images (logo): light version by default, dark version in the dark theme. */
+  /* Theme-specific images (logo): light version by default, dark version when the system is dark. */
   .theme-dark-only {
     display: none !important;
   }
-  :root[data-theme='dark'] .theme-dark-only {
-    display: block !important;
-  }
-  :root[data-theme='dark'] .theme-light-only {
-    display: none !important;
-  }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .theme-dark-only {
+    .theme-dark-only {
       display: block !important;
     }
-    :root:not([data-theme='light']) .theme-light-only {
+    .theme-light-only {
       display: none !important;
     }
   }
