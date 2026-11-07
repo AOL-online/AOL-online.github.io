@@ -8,11 +8,7 @@ export default defineConfig({
   site: process.env.SITE_URL ?? 'https://aol-online.github.io',
   base: process.env.BASE_PATH ?? '/ru',
   trailingSlash: 'always',
-  i18n: {
-    locales: ['ru', 'en', 'hr'],
-    defaultLocale: 'ru',
-    routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
-  },
+  // Languages and routing: src/i18n/ui.ts (published, prefixDefaultLang) + src/pages/[...lang]/.
   devToolbar: { enabled: false },
   vite: { plugins: [tailwindcss()] },
 });
