@@ -87,9 +87,8 @@ export interface Course {
   subtitle: string;
   startDate: string;
   endDate: string;
-  /** Zone in which times are announced ('по Москве'). */
+  /** Zone used to compute calendar days (no single main time is shown; times are by city). */
   mainTimeZone: string;
-  mainTimeZoneLabel: string;
   sessions: Session[];
   /** Cities of the time tables, in display order. */
   cities: City[];

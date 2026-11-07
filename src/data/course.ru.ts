@@ -15,8 +15,8 @@ export const course: Course = {
   startDate: '2026-11-13',
   endDate: '2026-11-15',
 
+  // Zone used to compute the calendar day of the intro talk (no single "main" time is shown on the site).
   mainTimeZone: 'Europe/Moscow',
-  mainTimeZoneLabel: 'по Москве',
 
   // 18:00 Moscow, 3 hours. North America: Friday separately 16:30 PT; Sat/Sun together with everyone.
   sessions: [

@@ -46,8 +46,7 @@ const ru = {
 
   'local.label': 'Ваше местное время',
   'course.label': 'Курс',
-  'course.time': '{time} {zone} · 3 часа',
-  'course.na': '{region}: пятница {fri}; суббота и воскресенье — вместе со всеми, {weekend}.',
+  'course.hours': '{hours} часа', // hours per day; non-breaking space
   'time.tba': 'время уточняется',
 
   'countries.title': 'Выберите страну регистрации',
