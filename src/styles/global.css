@@ -1,0 +1,112 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/nunito-sans';
+
+/* Design tokens. Change the palette here only.
+   Contrast (WCAG): accent-text on white 5.50:1, on surface 5.09:1; muted on white 5.41:1.
+   accent (#7677F4, from artofliving.org/hr-hr icons) is 3.67:1 on white -> fills, icons, lines only, never text. */
+@theme {
+  --color-ink: #1d1d1b;
+  --color-paper: #ffffff;
+  --color-surface: #f7f6f3;
+  --color-line: #e4e2dc;
+  --color-muted: #6b6a66;
+  --color-accent: #7677f4;
+  --color-accent-soft: #efeefe;
+  --color-accent-text: #5052f1;
+  --color-accent-strong: #3d3fd6;
+
+  --font-sans: 'Nunito Sans Variable', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+
+  --text-display: clamp(2.5rem, 1.6rem + 4vw, 4.75rem);
+  --text-h2: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  --text-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
+
+  --spacing-gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+  --spacing-section: clamp(3.5rem, 2.5rem + 3.5vw, 6.5rem);
+  --container-site: 75rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-accent-text);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: var(--container-site);
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-accent-text);
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .btn-primary {
+    background: var(--color-accent-text);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--color-accent-strong);
+    border-color: var(--color-accent-strong);
+  }
+  .btn-secondary {
+    background: var(--color-paper);
+    color: var(--color-accent-text);
+  }
+  .btn-secondary:hover {
+    background: var(--color-accent-soft);
+  }
+  .link {
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .link:hover {
+    color: var(--color-accent-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

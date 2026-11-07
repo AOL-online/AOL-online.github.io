@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import Countries from '../../components/Countries.astro';
+import { defaultLang, prefixDefaultLang, published, useTranslations, type Lang } from '../../i18n/ui';
+import { langPath } from '../../lib/url';
+
+export function getStaticPaths() {
+  const pages = published.map((lang) => ({
+    params: { lang: lang === defaultLang && !prefixDefaultLang ? undefined : lang },
+    props: { lang, redirect: false },
+  }));
+  // Own domain: the root redirects to the default language (GitHub Pages has no server redirects).
+  if (prefixDefaultLang) pages.push({ params: { lang: undefined }, props: { lang: defaultLang, redirect: true } });
+  return pages;
+}
+
+interface Props {
+  lang: Lang;
+  redirect: boolean;
+}
+const { lang, redirect } = Astro.props;
+const t = useTranslations(lang);
+const target = langPath(defaultLang);
+---
+
+{
+  redirect ? (
+    <html lang={defaultLang}>
+      <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="refresh" content={`0; url=${target}`} />
+        <meta name="robots" content="noindex" />
+        <link rel="canonical" href={new URL(target, Astro.site).href} />
+        <title>{t('meta.title')}</title>
+      </head>
+      <body>
+        <a href={target}>{t('meta.title')}</a>
+      </body>
+    </html>
+  ) : (
+    <Base lang={lang} title={t('meta.title')} description={t('meta.description')}>
+      <Hero lang={lang} />
+      <Countries lang={lang} />
+    </Base>
+  )
+}

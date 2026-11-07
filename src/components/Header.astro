@@ -1,0 +1,21 @@
+---
+import { useTranslations, type Lang } from '../i18n/ui';
+import { course } from '../data/course.ru';
+import { langPath } from '../lib/url';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/85">
+  <div class="container-site flex h-16 items-center justify-between gap-4">
+    <a href={langPath(lang)} class="group flex flex-col leading-tight no-underline">
+      <span class="text-lg font-extrabold tracking-tight text-ink group-hover:text-accent-text">{course.title}</span>
+      <span class="text-xs font-semibold text-muted">{t('header.brand.sub')}</span>
+    </a>
+    <a href="#register" class="btn btn-primary min-h-11 px-5 text-sm">{t('header.cta')}</a>
+  </div>
+</header>

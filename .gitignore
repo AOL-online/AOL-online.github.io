@@ -1,0 +1,21 @@
+# build
+dist/
+.astro/
+node_modules/
+
+# env and secrets
+.env
+.env.*
+*-private.*
+
+# local working notes (not public)
+PROGRESS.md
+CLAUDE.local.md
+_sync_inbox.md
+screenshots/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
