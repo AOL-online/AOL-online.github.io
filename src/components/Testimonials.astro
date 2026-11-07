@@ -1,0 +1,35 @@
+---
+// 11. Testimonials (text only). Hidden when the list is empty.
+import { copy } from '../i18n/copy.ru';
+import { course } from '../data/course.ru';
+const c = copy.testimonials;
+---
+
+{
+  course.testimonials.length > 0 && (
+    <section class="bg-paper py-[var(--spacing-section)]" aria-labelledby="testimonials-title">
+      <div class="container-site">
+        <h2 id="testimonials-title" class="h2">
+          {c.title}
+        </h2>
+        <ul class="mt-10 grid gap-6 md:grid-cols-3" role="list">
+          {course.testimonials.map((r) => (
+            <li class="flex flex-col rounded-3xl border border-line bg-surface p-6">
+              <span class="script text-6xl leading-none text-accent" aria-hidden="true">
+                “
+              </span>
+              <blockquote class="flex-1">
+                <p>{r.text}</p>
+              </blockquote>
+              <p class="mt-4 font-medium">
+                {r.name}
+                {r.place && <span class="font-light text-muted"> · {r.place}</span>}
+              </p>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-6 text-sm text-muted">{c.source}</p>
+      </div>
+    </section>
+  )
+}

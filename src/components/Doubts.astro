@@ -1,0 +1,36 @@
+---
+// 12. «Остались сомнения?» — repeat of the intro-talk call.
+import { Image } from 'astro:assets';
+import { copy } from '../i18n/copy.ru';
+import { course } from '../data/course.ru';
+import ScriptTitle from './ScriptTitle.astro';
+import IntroDetails from './IntroDetails.astro';
+import photo from '../assets/photos/doubts-namaste.jpg';
+
+const intro = course.introTalks[0];
+const c = copy.doubts;
+---
+
+{
+  intro && (
+    <section class="bg-surface py-[var(--spacing-section)]" aria-labelledby="doubts-title">
+      <div class="container-site grid gap-10 md:grid-cols-[1fr_1.1fr] md:items-center">
+        <Image
+          src={photo}
+          alt={c.photoAlt}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 768px) 40vw, 100vw"
+          class="aspect-[4/3] w-full rounded-[2rem] object-cover object-top"
+        />
+        <div>
+          <ScriptTitle id="doubts-title" text={c.title} />
+          <p class="mt-5 text-[length:var(--text-lead)]">{c.text}</p>
+          <p class="mt-6 text-lg font-medium">{intro.subtitle}</p>
+          <div class="mt-3">
+            <IntroDetails intro={intro} compact />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

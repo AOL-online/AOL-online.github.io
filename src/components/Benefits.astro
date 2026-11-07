@@ -1,0 +1,23 @@
+---
+// 7. «Что я получу после курса?» — 6 items with icons.
+import { copy } from '../i18n/copy.ru';
+import ScriptTitle from './ScriptTitle.astro';
+import Icon from './Icon.astro';
+const c = copy.benefits;
+---
+
+<section class="bg-paper py-[var(--spacing-section)]" aria-labelledby="benefits-title">
+  <div class="container-site">
+    <ScriptTitle id="benefits-title" text={c.title} />
+    <ul class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3" role="list">
+      {
+        c.items.map((it) => (
+          <li class="flex items-start gap-4">
+            <Icon name={it.icon} class="size-12" />
+            <p class="pt-1 text-lg">{it.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

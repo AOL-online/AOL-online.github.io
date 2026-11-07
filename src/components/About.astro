@@ -1,0 +1,22 @@
+---
+// 14. About Art of Living (one set of figures, no founder photo).
+import { copy } from '../i18n/copy.ru';
+const c = copy.about;
+---
+
+<section class="bg-surface py-[var(--spacing-section)]" aria-labelledby="about-title">
+  <div class="container-site">
+    <h2 id="about-title" class="h2">{c.title}</h2>
+    <p class="mt-5 max-w-3xl text-[length:var(--text-lead)]">{c.text}</p>
+    <ul class="mt-10 grid gap-6 sm:grid-cols-3" role="list">
+      {
+        c.stats.map((s) => (
+          <li>
+            <p class="text-4xl font-medium text-accent-text">{s.value}</p>
+            <p class="mt-1">{s.label}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

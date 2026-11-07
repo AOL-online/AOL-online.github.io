@@ -1,38 +1,29 @@
-// Interface strings. The site is Russian only (root, no language prefixes);
-// strings live in this dictionary so other languages can be added later.
+// Interface strings (Russian only, site in the root). Page texts: copy.ru.ts.
 
 export const lang = { htmlLang: 'ru', ogLocale: 'ru_RU' } as const;
 
 const ru = {
-  'meta.title': 'Программа Счастье — онлайн-курс Art of Living на русском, 13–15 ноября',
+  'meta.title': 'Счастье онлайн — Программа Счастье (Art of Living, Часть 1) на русском, 13–15 ноября',
   'meta.description':
-    'Бесплатное вводное занятие «Первый шаг» и курс «Программа Счастье» (Art of Living, Часть 1) онлайн на русском: Сударшан Крия™, йога и медитация. 3 дня по 3 часа в Zoom.',
+    'Бесплатное онлайн-занятие «Первый шаг» и курс «Программа Счастье» (Art of Living, Часть 1) на русском: Сударшан Крия™, йога и медитация. 3 дня по 3 часа в Zoom.',
 
   'skip': 'Перейти к содержанию',
-  'header.brand.sub': 'Art of Living · онлайн',
+  'header.brand.sub': 'Art of Living · онлайн на русском',
   'header.cta': 'Записаться',
   'theme.toDark': 'Включить тёмную тему',
   'theme.toLight': 'Включить светлую тему',
 
   'cta.register': 'Записаться на курс',
-
-  'intro.eyebrow': 'Бесплатное вводное занятие онлайн',
-  'intro.text':
-    'За 60 минут вы попробуете дыхательную практику и медитацию, узнаете, как устроен курс «Программа Счастье», и зададите вопросы учителю.',
-  'intro.format': 'Zoom · бесплатно',
-  'intro.cities': 'Время в вашем городе',
-  'intro.button': 'Записаться на «Первый шаг»',
+  'cta.intro': 'Записаться бесплатно',
   'intro.soon': 'Регистрация откроется здесь в ближайшее время.',
-  'intro.form.title': 'Регистрация на «Первый шаг»',
-  'intro.form.fallback': 'Форма не загрузилась? Откройте её в новой вкладке',
-  'intro.photoAlt': 'Группа людей выполняет дыхательную практику на природе',
+  'intro.format': 'Zoom · 60 минут · бесплатно',
+  'intro.cities': 'Время в городах',
+  'intro.photoAlt': 'Девушка с раскинутыми руками стоит на холме и смотрит на горы',
 
   'local.label': 'Ваше местное время',
-
-  'course.eyebrow': 'Курс',
-  'course.time': '{time} {zone} · 3 дня по 3 часа · Zoom',
+  'course.label': 'Курс',
+  'course.time': '{time} {zone} · 3 часа',
   'course.na': '{region}: пятница {fri}; суббота и воскресенье — вместе со всеми, {weekend}.',
-  'course.text': 'Сударшан Крия™, йога, медитация и знание об уме — живой курс с сертифицированными учителями.',
   'time.tba': 'время уточняется',
 
   'countries.title': 'Выберите страну регистрации',
@@ -41,7 +32,9 @@ const ru = {
   'countries.price': 'Стоимость указана на странице регистрации вашей страны.',
   'countries.hint': 'Выберите любую удобную регистрацию — неважно, в какой стране вы живёте.',
   'countries.button': 'Регистрация',
-  'countries.newTab': 'откроется в новой вкладке',
+  'newTab': 'откроется в новой вкладке',
+
+  'teacher.photoSoon': 'Фото скоро',
 
   'footer.status': 'Страница сертифицированных учителей Art of Living',
   'footer.registration': 'Регистрация и оплата — на сайтах Art of Living выбранной страны.',

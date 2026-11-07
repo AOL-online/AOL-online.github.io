@@ -19,3 +19,6 @@ screenshots/
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+
+# brand fonts: local preview only until the web licence is confirmed
+public/fonts/brand/

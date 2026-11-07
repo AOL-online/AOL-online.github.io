@@ -1,15 +1,35 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
-import IntroForm from '../components/IntroForm.astro';
 import CourseBand from '../components/CourseBand.astro';
 import Countries from '../components/Countries.astro';
+import Program from '../components/Program.astro';
+import Format from '../components/Format.astro';
+import Kriya from '../components/Kriya.astro';
+import Benefits from '../components/Benefits.astro';
+import Research from '../components/Research.astro';
+import Schedule from '../components/Schedule.astro';
+import Teachers from '../components/Teachers.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Doubts from '../components/Doubts.astro';
+import Faq from '../components/Faq.astro';
+import About from '../components/About.astro';
 import { t } from '../i18n/ui';
 ---
 
 <Base title={t('meta.title')} description={t('meta.description')}>
   <Hero />
-  <IntroForm />
   <CourseBand />
   <Countries />
+  <Program />
+  <Format />
+  <Kriya />
+  <Benefits />
+  <Research />
+  <Schedule />
+  <Teachers />
+  <Testimonials />
+  <Doubts />
+  <Faq />
+  <About />
 </Base>

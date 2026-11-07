@@ -8,10 +8,10 @@ const flags = import.meta.glob<{ default: ImageMetadata }>('../assets/flags/*.sv
 const flagFor = (code: string) => flags[`../assets/flags/${code}.svg`]?.default;
 ---
 
-<section id="register" class="bg-surface py-[var(--spacing-section)]" aria-labelledby="register-title">
+<section id="register" class="bg-paper py-[var(--spacing-section)]" aria-labelledby="register-title">
   <div class="container-site">
     <div class="max-w-2xl">
-      <h2 id="register-title" class="text-[length:var(--text-h2)] font-extrabold leading-tight tracking-tight">
+      <h2 id="register-title" class="h2">
         {t('countries.title')}
       </h2>
       <p class="mt-4 text-[length:var(--text-lead)]">{t('countries.text')}</p>
@@ -22,7 +22,7 @@ const flagFor = (code: string) => flags[`../assets/flags/${code}.svg`]?.default;
         course.countries.map((c) => {
           const flag = flagFor(c.code);
           return (
-            <li class="flex items-center gap-4 rounded-2xl border border-line bg-paper p-4 sm:p-5">
+            <li class="flex items-center gap-4 rounded-2xl border border-line bg-surface p-4 sm:p-5">
               {flag && (
                 <img
                   src={flag.src}
@@ -33,13 +33,13 @@ const flagFor = (code: string) => flags[`../assets/flags/${code}.svg`]?.default;
                   loading="lazy"
                 />
               )}
-              <span class="flex-1 text-lg font-bold">{c.name}</span>
+              <span class="flex-1 text-lg font-medium">{c.name}</span>
               <a
                 href={c.url}
                 target="_blank"
                 rel="noopener"
                 class="btn btn-secondary min-h-11 px-4 text-sm"
-                aria-label={`${t('countries.button')}: ${c.name} (${t('countries.newTab')})`}
+                aria-label={`${t('countries.button')}: ${c.name} (${t('newTab')})`}
               >
                 {t('countries.button')}
                 <svg aria-hidden="true" viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -53,7 +53,7 @@ const flagFor = (code: string) => flags[`../assets/flags/${code}.svg`]?.default;
     </ul>
 
     <div class="mt-8 max-w-2xl space-y-2 text-base">
-      <p class="font-semibold">{t('countries.price')}</p>
+      <p class="font-medium">{t('countries.price')}</p>
       <p class="text-muted">{t('countries.hint')}</p>
     </div>
   </div>

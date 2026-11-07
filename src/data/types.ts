@@ -35,18 +35,17 @@ export interface Country {
 }
 
 /**
- * How people register for the intro talk.
- * - none:  button stub "registration opens soon"
- * - link:  button to an external page (Zoom registration, Tally, …)
- * - embed: form embedded in the page (iframe URL, e.g. Tally embed) + fallback link
+ * How people register for the intro talk (simple external link, no embedded form).
+ * - none: button stub "registration opens soon"
+ * - link: button to the external form
  */
-export type Registration =
-  | { kind: 'none' }
-  | { kind: 'link'; url: string }
-  | { kind: 'embed'; url: string; height?: number };
+export type Registration = { kind: 'none' } | { kind: 'link'; url: string };
 
 export interface IntroTalk {
+  /** Big handwritten heading. */
   title: string;
+  /** Line under the heading. */
+  subtitle: string;
   start: string;
   durationMin: number;
   registration: Registration;
@@ -58,7 +57,7 @@ export interface Teacher {
   place: string;
   role: string;
   bio?: string;
-  /** Photo file in src/assets/teachers/ (only with consent). */
+  /** Photo file name in src/assets/teachers/ (only with consent). Without photo: round placeholder. */
   photo?: string;
   /** Contacts — only with consent. Phone is shown by button only; e-mail via a protected component. */
   telegram?: string;
@@ -81,6 +80,8 @@ export interface Contacts {
 }
 
 export interface Course {
+  /** Handwritten course name, e.g. 'Счастье онлайн'. */
+  brandTitle: string;
   title: string;
   subtitle: string;
   startDate: string;

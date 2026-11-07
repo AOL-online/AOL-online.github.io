@@ -1,0 +1,26 @@
+---
+// 5. «Формат курса» — icons.
+import { copy } from '../i18n/copy.ru';
+import ScriptTitle from './ScriptTitle.astro';
+import Icon from './Icon.astro';
+const c = copy.format;
+---
+
+<section class="bg-paper py-[var(--spacing-section)]" aria-labelledby="format-title">
+  <div class="container-site">
+    <ScriptTitle id="format-title" text={c.title} />
+    <ul class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4" role="list">
+      {
+        c.items.map((it) => (
+          <li class="flex items-start gap-4">
+            <Icon name={it.icon} class="size-12" />
+            <div>
+              <p class="text-xl font-medium">{it.title}</p>
+              <p class="text-muted">{it.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

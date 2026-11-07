@@ -1,0 +1,31 @@
+---
+// 8. Research: 5 effects (wording of the Belarus page) + PDF + medical note.
+import { copy, RESEARCH_PDF } from '../i18n/copy.ru';
+import { url } from '../lib/url';
+const c = copy.research;
+---
+
+<section class="bg-surface py-[var(--spacing-section)]" aria-labelledby="research-title">
+  <div class="container-site">
+    <h2 id="research-title" class="h2 max-w-3xl">{c.title}</h2>
+    <p class="mt-5 max-w-3xl text-[length:var(--text-lead)]">{c.text}</p>
+    <p class="mt-8 font-medium">{c.listTitle}</p>
+    <ol class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3" role="list">
+      {
+        c.list.map((li, i) => (
+          <li class="flex gap-4 rounded-2xl border border-line bg-paper p-5">
+            <span class="script flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-accent text-3xl text-ink" aria-hidden="true">
+              {i + 1}
+            </span>
+            <span>{li}</span>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="mt-8 max-w-3xl">
+      {c.jama.before}<a class="link" href={c.jama.url} target="_blank" rel="noopener">{c.jama.link}</a>{c.jama.after}
+    </p>
+    <p class="mt-4"><a class="link font-medium" href={url(RESEARCH_PDF)} download>{c.pdf}</a></p>
+    <p class="mt-6 max-w-3xl text-sm text-muted">{c.medical}</p>
+  </div>
+</section>

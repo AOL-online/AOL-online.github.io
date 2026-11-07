@@ -1,0 +1,51 @@
+---
+// 9. Course time by city: 3 days x 7 cities, from ISO + IANA zones (regional overrides highlighted).
+import { t } from '../i18n/ui';
+import { copy } from '../i18n/copy.ru';
+import { course } from '../data/course.ru';
+import { formatDayShort, formatTimeRange, sessionStart, localTimeData } from '../lib/time';
+
+const c = copy.schedule;
+const days = course.sessions.map((s) => formatDayShort(`${s.date}T12:00:00Z`, 'UTC'));
+const rows = course.cities.map((city) => ({
+  name: city.name,
+  cells: course.sessions.map((s) => {
+    const st = sessionStart(s, city.tz);
+    return { text: st ? formatTimeRange(st, s.durationMin, city.tz) : t('time.tba'), override: st !== s.start };
+  }),
+}));
+---
+
+<section id="schedule" class="bg-paper py-[var(--spacing-section)]" aria-labelledby="schedule-title">
+  <div class="container-site">
+    <h2 id="schedule-title" class="h2">{c.title}</h2>
+    <p class="mt-4 max-w-2xl">{c.text}</p>
+    <div class="mt-8 overflow-x-auto rounded-2xl border border-line">
+      <table class="w-full min-w-[22rem] text-left">
+        <thead class="bg-surface text-sm">
+          <tr>
+            <th scope="col" class="px-4 py-3 font-medium">{c.city}</th>
+            {days.map((d) => <th scope="col" class="px-4 py-3 font-medium">{d}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            rows.map((r) => (
+              <tr class="border-t border-line">
+                <th scope="row" class="px-4 py-3 font-medium">
+                  {r.name}
+                </th>
+                {r.cells.map((cell) => (
+                  <td class:list={['whitespace-nowrap px-4 py-3 tabular-nums', cell.override && 'font-medium text-accent-text']}>{cell.text}</td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4" data-local-times={localTimeData(course.sessions)} hidden>
+      <span class="font-medium">{t('local.label')}:</span> <span data-local-out />
+    </p>
+  </div>
+</section>
