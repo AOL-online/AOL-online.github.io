@@ -20,7 +20,7 @@ Astro 7 + Tailwind CSS 4 + TypeScript strict, static, deployed to GitHub Pages b
 - `src/assets/flags/<code>.svg` — country flags (from `flag-icons`, MIT). New country: copy `node_modules/flag-icons/flags/4x3/<code>.svg` here.
 
 ## Address
-Repo `AOL-online/AOL-online.github.io`, base always `/`. Env `SITE_URL`: now `https://aol-online.github.io`, at launch `https://artofliving.page` (+ `public/CNAME`).
+Repo `AOL-online/AOL-online.github.io`, base always `/`. Own domain https://artofliving.page: `public/CNAME` + env `SITE_URL` in the workflow + Pages custom domain (HTTPS enforced; .page is HTTPS-only). aol-online.github.io redirects to the domain.
 
 ## Rules
 - `npm run build` (astro check + build) must pass before every commit.

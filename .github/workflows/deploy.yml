@@ -18,8 +18,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # At launch: SITE_URL=https://artofliving.page and add public/CNAME. BASE_PATH stays /.
-      SITE_URL: https://aol-online.github.io
+      # Own domain (public/CNAME). BASE_PATH stays /.
+      SITE_URL: https://artofliving.page
       BASE_PATH: /
     steps:
       - uses: actions/checkout@v5
