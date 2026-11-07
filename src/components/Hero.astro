@@ -1,5 +1,5 @@
 ---
-// 1. First screen: free intro talk «Первый шаг» (main call).
+// 1. First screen: free intro talk «Первый шаг» with the registration form (main call).
 import { Picture } from 'astro:assets';
 import { t } from '../i18n/ui';
 import { copy } from '../i18n/copy.ru';
@@ -7,6 +7,7 @@ import { course } from '../data/course.ru';
 import heroImage from '../assets/photos/hero-open-arms.jpg';
 import ScriptTitle from './ScriptTitle.astro';
 import IntroDetails from './IntroDetails.astro';
+import RegistrationForm from './RegistrationForm.astro';
 
 const intro = course.introTalks[0];
 ---
@@ -14,8 +15,9 @@ const intro = course.introTalks[0];
 {
   intro && (
     <section class="bg-paper pb-[var(--spacing-section)] pt-8 md:pt-14" aria-labelledby="intro-title">
-      <div class="container-site grid items-center gap-10 md:grid-cols-[1.15fr_1fr] lg:gap-16">
-        <div>
+      <div class="container-site grid items-start gap-10 lg:grid-cols-2 lg:gap-x-14">
+        {/* Mobile order: text, form, photo. Desktop: text + photo left, form right. */}
+        <div class="lg:col-start-1 lg:row-start-1">
           <ScriptTitle as="h1" id="intro-title" text={intro.title} size="display" />
           <p class="mt-5 text-[length:var(--text-lead)] font-medium">{intro.subtitle}</p>
           <p class="mt-3 max-w-xl">{copy.intro.text}</p>
@@ -23,15 +25,16 @@ const intro = course.introTalks[0];
             <IntroDetails intro={intro} />
           </div>
         </div>
+        <div id="intro-form" class="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <RegistrationForm kind="intro" source="hero" />
+        </div>
         <Picture
           src={heroImage}
           alt={t('intro.photoAlt')}
           formats={['avif', 'webp']}
-          widths={[480, 800, 1200, 1600]}
-          sizes="(min-width: 768px) 45vw, 100vw"
-          loading="eager"
-          fetchpriority="high"
-          class="aspect-[4/3] w-full rounded-[2rem] object-cover object-[50%_40%] md:aspect-[4/5]"
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          class="aspect-[16/9] w-full rounded-[2rem] object-cover object-[50%_40%] lg:col-start-1 lg:row-start-2"
         />
       </div>
     </section>

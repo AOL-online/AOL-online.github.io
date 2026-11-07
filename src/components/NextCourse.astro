@@ -1,0 +1,24 @@
+---
+// «Записаться на ближайший курс» — appears after the current course ends (checked in the visitor's browser;
+// also visible right away if the site is built after the end). Form kind "next" → sheet «Ближайший курс».
+import { t } from '../i18n/ui';
+import { course } from '../data/course.ru';
+import { formatDateRange } from '../lib/time';
+import RegistrationForm from './RegistrationForm.astro';
+
+const last = course.sessions[course.sessions.length - 1];
+const endIso = last?.start
+  ? new Date(new Date(last.start).getTime() + last.durationMin * 60_000).toISOString()
+  : `${course.endDate}T23:59:59Z`;
+const ended = Date.now() >= Date.parse(endIso);
+---
+
+<section id="next-course" class="bg-paper py-[var(--spacing-section)]" aria-labelledby="next-title" data-show-after={endIso} hidden={!ended}>
+  <div class="container-site grid items-start gap-10 lg:grid-cols-[1fr_1.1fr]">
+    <div>
+      <h2 id="next-title" class="h2">{t('next.title')}</h2>
+      <p class="mt-5 text-[length:var(--text-lead)]">{t('next.text', { dates: formatDateRange(course.startDate, course.endDate) })}</p>
+    </div>
+    <RegistrationForm kind="next" source="next-course" title={false} />
+  </div>
+</section>

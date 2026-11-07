@@ -12,6 +12,7 @@ Astro 7 + Tailwind CSS 4 + TypeScript strict, static, deployed to GitHub Pages b
 - `src/styles/global.css` — design tokens in `@theme` (light) + dark overrides in `@media (prefers-color-scheme: dark)`. Brandbook palette: orange `accent` #ff8400 for fills/icons/underlines only; text uses `accent-text`; buttons orange with dark text (`btn`/`on-btn`); slate blue block `.on-slate`. ≥4.5:1 in both themes.
 - `src/i18n/copy.ru.ts` — page texts (blocks). `src/components/ScriptTitle.astro` — handwritten heading + orange underline (3–5 headings only).
 - Fonts: Certa Sans + Art of Living Script in `public/fonts/brand/` (WOFF2 subsets, CFF seac glyphs decomposed — otherwise Chrome drops the space after «ё»). Public use allowed by the owner.
+- Registration forms: `RegistrationForm.astro` + `src/lib/reg-form.ts` → Google Apps Script web app (`course.forms.webAppUrl`, owner's Google Sheet; the script itself lives outside this repo). No personal data in the repo or in the browser storage. Honeypot + minimum fill time. `NextCourse.astro` appears after the course end (`src/lib/show-after.ts`).
 - Logo: `src/components/Logo.astro` — compact (header) / main with descriptor (footer), light/dark versions by theme.
 - `public/files/sudarshan-kriya-research-ru.pdf` — research brochure (contains AoL research e-mails, allowed in the hook).
 - Theme: automatic only (browser/system `prefers-color-scheme`); no toggle, no script, no storage.

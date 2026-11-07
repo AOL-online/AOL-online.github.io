@@ -1,0 +1,124 @@
+---
+// Registration form («Первый шаг» / «Ближайший курс») → Google Apps Script web app → owner's Google Sheet.
+// - webAppUrl set: the form (needs JS) + <noscript> fallback link.
+// - webAppUrl null: fallback link if set, otherwise «Регистрация откроется в ближайшее время».
+// Spam protection: hidden honeypot field + minimum fill time (checked again by the script).
+import { t } from '../i18n/ui';
+import { course } from '../data/course.ru';
+
+interface Props {
+  kind: 'intro' | 'next';
+  /** Which form on the page: hero | doubts | next-course. Saved in the sheet. */
+  source: string;
+  title?: boolean;
+}
+const { kind, source, title = true } = Astro.props;
+const { webAppUrl, introFallbackUrl, nextCourseFallbackUrl } = course.forms;
+const fallback = kind === 'intro' ? introFallbackUrl : nextCourseFallbackUrl;
+const id = `f-${source}`;
+const field =
+  'mt-1 block w-full rounded-xl border border-line bg-paper px-3.5 py-2.5 text-base text-ink placeholder:text-muted focus:border-accent-text focus:outline-none focus:ring-2 focus:ring-accent-text/40';
+const label = 'block text-sm font-medium';
+const messengers = ['Telegram', 'WhatsApp', 'Viber'];
+---
+
+<div class="reg rounded-3xl border border-line bg-paper p-5 sm:p-6">
+  {title && <p class="mb-4 text-xl font-medium">{kind === 'intro' ? t('form.title.intro') : t('form.title.next')}</p>}
+  {
+    webAppUrl ? (
+      <>
+        <form
+          class="needs-js grid gap-4 sm:grid-cols-2"
+          data-reg-form
+          data-endpoint={webAppUrl}
+          data-kind={kind}
+          data-source={source}
+          data-msg-sending={t('form.sending')}
+          data-msg-error={t('form.error')}
+          data-msg-error-email={t('form.error.email')}
+          data-msg-error-phone={t('form.error.phone')}
+          novalidate
+        >
+          <div>
+            <label class={label} for={`${id}-name`}>{t('form.name')}</label>
+            <input class={field} id={`${id}-name`} name="name" autocomplete="given-name" required maxlength="100" />
+          </div>
+          <div>
+            <label class={label} for={`${id}-surname`}>{t('form.surname')}</label>
+            <input class={field} id={`${id}-surname`} name="surname" autocomplete="family-name" required maxlength="100" />
+          </div>
+          <div>
+            <label class={label} for={`${id}-phone`}>{t('form.phone')}</label>
+            <input
+              class={field}
+              id={`${id}-phone`}
+              name="phone"
+              type="tel"
+              inputmode="tel"
+              autocomplete="tel"
+              required
+              maxlength="25"
+              pattern="\+?[0-9][0-9\s().\-]{6,20}"
+              aria-describedby={`${id}-phone-hint`}
+            />
+            <p class="mt-1 text-xs text-muted" id={`${id}-phone-hint`}>{t('form.phone.hint')}</p>
+          </div>
+          <div>
+            <label class={label} for={`${id}-email`}>{t('form.email')}</label>
+            <input class={field} id={`${id}-email`} name="email" type="email" inputmode="email" autocomplete="email" required maxlength="150" />
+          </div>
+          <div>
+            <label class={label} for={`${id}-city`}>{t('form.city')}</label>
+            <input class={field} id={`${id}-city`} name="city" autocomplete="address-level2" required maxlength="100" />
+          </div>
+          <div>
+            <label class={label} for={`${id}-country`}>{t('form.country')}</label>
+            <input class={field} id={`${id}-country`} name="country" autocomplete="country-name" required maxlength="100" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class={label} for={`${id}-messenger`}>
+              {t('form.messenger')} <span class="font-light text-muted">({t('form.optional')})</span>
+            </label>
+            <select class={field} id={`${id}-messenger`} name="messenger">
+              <option value="">{t('form.messenger.none')}</option>
+              {messengers.map((m) => <option value={m}>{m}</option>)}
+              <option value="только email">{t('form.messenger.emailOnly')}</option>
+            </select>
+          </div>
+          {/* Honeypot: hidden from people and screen readers; bots fill it. */}
+          <div class="hidden" aria-hidden="true">
+            <label for={`${id}-website`}>Website</label>
+            <input id={`${id}-website`} name="website" tabindex="-1" autocomplete="off" />
+          </div>
+          <label class="flex items-start gap-3 text-sm sm:col-span-2" for={`${id}-consent`}>
+            <input id={`${id}-consent`} name="consent" type="checkbox" value="yes" required class="mt-0.5 size-5 shrink-0 accent-[var(--color-accent)]" />
+            <span>{t('form.consent')}</span>
+          </label>
+          <p class="text-xs text-muted sm:col-span-2">{t('form.required')}</p>
+          <p class="hidden text-sm font-medium text-accent-text sm:col-span-2" data-reg-error role="alert"></p>
+          <div class="sm:col-span-2">
+            <button type="submit" class="btn btn-primary w-full text-lg sm:w-auto" data-reg-submit>
+              {kind === 'intro' ? t('form.submit.intro') : t('form.submit.next')}
+            </button>
+          </div>
+        </form>
+        <div class="hidden" data-reg-success tabindex="-1" role="status">
+          <p class="text-lg font-medium">{kind === 'intro' ? t('form.success.intro') : t('form.success.next')}</p>
+        </div>
+        {fallback && (
+          <noscript>
+            <a class="btn btn-primary text-lg" href={fallback} target="_blank" rel="noopener">
+              {t('form.fallback')}
+            </a>
+          </noscript>
+        )}
+      </>
+    ) : fallback ? (
+      <a class="btn btn-primary text-lg" href={fallback} target="_blank" rel="noopener" aria-label={`${t('form.fallback')} (${t('newTab')})`}>
+        {t('form.fallback')}
+      </a>
+    ) : (
+      <p class="text-muted">{t('form.soon')}</p>
+    )
+  }
+</div>

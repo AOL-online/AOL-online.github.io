@@ -50,15 +50,13 @@ export const course: Course = {
     { code: 'kz', name: 'Казахстан', url: 'https://aolreg.org/KZC1127764' },
   ],
 
-  // Free intro talk «Первый шаг»: Mon 9 Nov 18:30 Moscow, 1 hour, Zoom.
-  // TODO: Google Form URL — set registration to { kind: 'link', url: 'https://forms.gle/…' } (both buttons use it).
+  // Free intro talk «Первый шаг»: Mon 9 Nov 18:30 Moscow, 1 hour, Zoom. Registration: forms below.
   introTalks: [
     {
       title: 'За пределами обычного дыхания',
       subtitle: 'Бесплатное онлайн-занятие «Первый шаг»',
       start: '2026-11-09T18:30:00+03:00',
       durationMin: 60,
-      registration: { kind: 'none' },
     },
   ],
 
@@ -91,6 +89,15 @@ export const course: Course = {
       sourceUrl: 'https://www.artofliving.by/',
     },
   ],
+
+  // Registration forms («Первый шаг», «Ближайший курс») → Google Apps Script web app → owner's Google Sheet.
+  // TODO: webAppUrl = 'https://script.google.com/macros/s/…/exec' (from the owner after deployment).
+  // Fallback links (Google Forms) are shown without JavaScript.
+  forms: {
+    webAppUrl: null,
+    introFallbackUrl: null,
+    nextCourseFallbackUrl: null,
+  },
 
   // TODO(TBD): public contacts — none until the team decides. Keep null.
   contacts: {

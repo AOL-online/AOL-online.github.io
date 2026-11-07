@@ -20,6 +20,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Light/dark theme follows the browser/system setting only (prefers-color-scheme). -->
+    <!-- Mark JS support before paint: registration forms need JS, otherwise fallback links are shown. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#16222c" media="(prefers-color-scheme: dark)" />
@@ -47,7 +49,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <Footer />
     <script>
       import { initLocalTimes } from '../lib/local-time';
+      import { initRegForms } from '../lib/reg-form';
+      import { initShowAfter } from '../lib/show-after';
       initLocalTimes();
+      initRegForms();
+      initShowAfter();
     </script>
   </body>
 </html>

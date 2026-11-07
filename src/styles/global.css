@@ -103,6 +103,10 @@
   [id] {
     scroll-margin-top: 5rem;
   }
+  /* Parts that need JavaScript (registration forms) are hidden without it; <noscript> shows a fallback. */
+  html:not(.js) .needs-js {
+    display: none !important;
+  }
   /* Theme-specific images (logo): light version by default, dark version when the system is dark. */
   .theme-dark-only {
     display: none !important;

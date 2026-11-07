@@ -35,11 +35,15 @@ export interface Country {
 }
 
 /**
- * How people register for the intro talk (simple external link, no embedded form).
- * - none: button stub "registration opens soon"
- * - link: button to the external form
+ * Registration forms on the site → Google Apps Script web app → Google Sheet (owner's account).
+ * - webAppUrl null: forms show «Регистрация откроется в ближайшее время» (or the fallback link, if set).
+ * - fallback URLs: shown without JavaScript (or instead of the form while webAppUrl is null).
  */
-export type Registration = { kind: 'none' } | { kind: 'link'; url: string };
+export interface Forms {
+  webAppUrl: string | null;
+  introFallbackUrl: string | null;
+  nextCourseFallbackUrl: string | null;
+}
 
 export interface IntroTalk {
   /** Big handwritten heading. */
@@ -48,7 +52,6 @@ export interface IntroTalk {
   subtitle: string;
   start: string;
   durationMin: number;
-  registration: Registration;
 }
 
 /** Organiser shown in «Контакты организаторов» (no teacher names/bios on the site). */
@@ -94,6 +97,7 @@ export interface Course {
   /** Next free intro talk(s); first one is the main call on the first screen. Empty = hidden. */
   introTalks: IntroTalk[];
   organizers: Organizer[];
+  forms: Forms;
   testimonials: Testimonial[];
   contacts: Contacts;
 }
