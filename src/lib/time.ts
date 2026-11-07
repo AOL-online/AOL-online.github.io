@@ -21,9 +21,14 @@ export function formatTime(iso: string, tz: string): string {
   return new Intl.DateTimeFormat(LOCALE, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: tz }).format(new Date(iso));
 }
 
-/** 'понедельник, 9 ноября' in a zone. */
+/** Drop the Russian year suffix: '2026 г.' -> '2026'. */
+const noYearSuffix = (s: string) => s.replace(/\s?г\.$/, '');
+
+/** 'понедельник, 9 ноября 2026' in a zone. */
 export function formatDayLong(iso: string, tz: string): string {
-  return new Intl.DateTimeFormat(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', timeZone: tz }).format(new Date(iso));
+  return noYearSuffix(
+    new Intl.DateTimeFormat(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: tz }).format(new Date(iso)),
+  );
 }
 
 /** 'пн, 9 нояб.' in a zone. */
@@ -36,10 +41,10 @@ export function localDate(iso: string, tz: string): string {
   return new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: tz }).format(new Date(iso));
 }
 
-/** '13–15 ноября 2026 г.' from 'YYYY-MM-DD' dates. */
+/** '13–15 ноября 2026' from 'YYYY-MM-DD' dates. */
 export function formatDateRange(start: string, end: string): string {
   const d = (x: string) => new Date(`${x}T12:00:00Z`);
-  return new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).formatRange(d(start), d(end));
+  return noYearSuffix(new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).formatRange(d(start), d(end)));
 }
 
 /** 'пт–вс' from 'YYYY-MM-DD' dates. */

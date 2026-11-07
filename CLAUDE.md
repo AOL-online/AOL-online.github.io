@@ -1,6 +1,7 @@
 # CLAUDE.md — technical rules (public repo)
 
-One-page Russian landing for the online Happiness Program (Art of Living, Part 1).
+One-page Russian landing for the online course «Искусство жизни, Часть 1» (Art of Living Part 1), international flow.
+Naming: never «Счастье» / «Программа Счастье» in site texts (organisers' decision 2026-11-07). Teachers are not named; block «Контакты организаторов».
 Astro 7 + Tailwind CSS 4 + TypeScript strict, static, deployed to GitHub Pages by `.github/workflows/deploy.yml` on push to `main`.
 
 ## Where things are

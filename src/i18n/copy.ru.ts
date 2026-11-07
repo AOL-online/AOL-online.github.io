@@ -1,12 +1,12 @@
 // Page texts (Russian). Wording follows the official Russian-language Art of Living pages
-// (artofliving.ru «Счастье онлайн», artofliving.by «Искусство жизни, часть 1»).
+// (artofliving.ru, artofliving.by «Искусство жизни, часть 1»). Course name on the site: «Искусство жизни, Часть 1».
 // Health wording: only as observed in research, always with "does not replace medical treatment".
 
 export const RESEARCH_PDF = 'files/sudarshan-kriya-research-ru.pdf';
 
 export const copy = {
   intro: {
-    text: 'За 60 минут вы попробуете дыхательную практику и медитацию, узнаете, как устроен курс «Программа Счастье», и зададите вопросы учителю.',
+    text: 'За час вы попробуете дыхательную практику и медитацию, узнаете, как устроен курс «Искусство жизни, Часть 1», и зададите вопросы учителю.',
   },
 
   course: {
@@ -73,7 +73,7 @@ export const copy = {
   benefits: {
     title: 'Что я получу после курса?',
     items: [
-      { icon: 'battery', text: 'Полное восстановление от накопившегося стресса и глубокий отдых за 3 дня.' },
+      { icon: 'battery', text: 'Глубокий отдых и восстановление сил за 3 дня.' },
       { icon: 'tool', text: 'Инструмент для самостоятельной регуляции стресса в любой ситуации — 20 минут в день.' },
       { icon: 'yoga', text: 'Комплекс простых упражнений йоги для снятия напряжения с тела.' },
       { icon: 'calendar', text: 'Доступ к еженедельным поддерживающим занятиям онлайн.' },
@@ -109,9 +109,9 @@ export const copy = {
     city: 'Город',
   },
 
-  teachers: {
-    title: 'Учителя',
-    text: 'Курс ведут сертифицированные учителя Art of Living.',
+  organizers: {
+    title: 'Контакты организаторов',
+    text: 'Организаторы международного потока на русском языке.',
   },
 
   testimonials: {

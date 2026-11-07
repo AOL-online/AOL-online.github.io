@@ -9,15 +9,35 @@ import Kriya from '../components/Kriya.astro';
 import Benefits from '../components/Benefits.astro';
 import Research from '../components/Research.astro';
 import Schedule from '../components/Schedule.astro';
-import Teachers from '../components/Teachers.astro';
+import Organizers from '../components/Organizers.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Doubts from '../components/Doubts.astro';
 import Faq from '../components/Faq.astro';
 import About from '../components/About.astro';
 import { t } from '../i18n/ui';
+import { course } from '../data/course.ru';
+
+// schema.org Event (no prices, no contacts). Times from the data file.
+const first = course.sessions[0];
+const last = course.sessions[course.sessions.length - 1];
+const end = last?.start ? new Date(new Date(last.start).getTime() + last.durationMin * 60_000).toISOString() : course.endDate;
+const event = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: course.title,
+  description: t('meta.description'),
+  inLanguage: 'ru',
+  startDate: first?.start ?? course.startDate,
+  endDate: end,
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+  location: { '@type': 'VirtualLocation', url: new URL('/#register', Astro.site).href },
+  organizer: { '@type': 'Organization', name: 'Учителя Art of Living' },
+};
 ---
 
 <Base title={t('meta.title')} description={t('meta.description')}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(event)} />
   <Hero />
   <CourseBand />
   <Countries />
@@ -27,7 +47,7 @@ import { t } from '../i18n/ui';
   <Benefits />
   <Research />
   <Schedule />
-  <Teachers />
+  <Organizers />
   <Testimonials />
   <Doubts />
   <Faq />

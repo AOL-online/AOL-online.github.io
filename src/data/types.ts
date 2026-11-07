@@ -51,16 +51,14 @@ export interface IntroTalk {
   registration: Registration;
 }
 
-export interface Teacher {
+/** Organiser shown in «Контакты организаторов» (no teacher names/bios on the site). */
+export interface Organizer {
   name: string;
   /** City / country, e.g. 'Загреб'. */
   place: string;
-  role: string;
-  bio?: string;
-  /** Photo file name in src/assets/teachers/ (only with consent). Without photo: round placeholder. */
-  photo?: string;
   /** Contacts — only with consent. Phone is shown by button only; e-mail via a protected component. */
   telegram?: string;
+  whatsapp?: string;
   phone?: string;
   email?: string;
 }
@@ -80,7 +78,7 @@ export interface Contacts {
 }
 
 export interface Course {
-  /** Handwritten course name, e.g. 'Счастье онлайн'. */
+  /** Handwritten course name, e.g. 'Часть 1'. */
   brandTitle: string;
   title: string;
   subtitle: string;
@@ -95,7 +93,7 @@ export interface Course {
   countries: Country[];
   /** Next free intro talk(s); first one is the main call on the first screen. Empty = hidden. */
   introTalks: IntroTalk[];
-  teachers: Teacher[];
+  organizers: Organizer[];
   testimonials: Testimonial[];
   contacts: Contacts;
 }

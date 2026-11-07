@@ -11,7 +11,8 @@ const { telegram } = course.contacts;
   <div class="container-site grid gap-8 py-12 text-sm md:grid-cols-[auto_2fr_1fr] md:items-start">
     <Logo variant="main" class="h-24" />
     <div class="space-y-2">
-      <p class="text-base font-medium">{course.brandTitle} · {course.title}</p>
+      <p class="text-base font-medium">{course.title}</p>
+      <p class="text-muted">{course.subtitle}</p>
       <p class="font-medium">{t('footer.status')}</p>
       <p class="text-muted">{t('footer.registration')}</p>
       <p class="text-muted">{t('footer.medical')}</p>

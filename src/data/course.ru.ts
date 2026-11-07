@@ -8,9 +8,9 @@ import type { Course } from './types';
 // =====================================================================
 
 export const course: Course = {
-  brandTitle: 'Счастье онлайн',
-  title: 'Программа Счастье',
-  subtitle: 'Art of Living, Часть 1 · онлайн на русском',
+  brandTitle: 'Часть 1',
+  title: 'Искусство жизни, Часть 1',
+  subtitle: 'онлайн · международный поток',
 
   startDate: '2026-11-13',
   endDate: '2026-11-15',
@@ -50,8 +50,8 @@ export const course: Course = {
     { code: 'kz', name: 'Казахстан', url: 'https://aolreg.org/KZC1127764' },
   ],
 
-  // Free intro talk. TODO: registration URL — set registration to { kind: 'link', url: 'https://…' }
-  // (external form; fields: имя, фамилия, телефон, email, город, страна + согласие на обработку данных).
+  // Free intro talk «Первый шаг»: Mon 9 Nov 18:30 Moscow, 1 hour, Zoom.
+  // TODO: Google Form URL — set registration to { kind: 'link', url: 'https://forms.gle/…' } (both buttons use it).
   introTalks: [
     {
       title: 'За пределами обычного дыхания',
@@ -62,30 +62,31 @@ export const course: Course = {
     },
   ],
 
-  // TODO: photos, surnames and contacts — later, only with consent (fields: photo, telegram, phone, email).
-  teachers: [
-    { name: 'Ольга', place: 'США', role: 'Сертифицированный учитель Art of Living' },
-    { name: 'Михаил', place: 'Загреб', role: 'Сертифицированный учитель Art of Living' },
-    { name: 'Екатерина', place: 'Москва', role: 'Сертифицированный учитель Art of Living' },
+  // Contacts of the organisers (teachers are NOT named on the site — organisers' decision 2026-11-07).
+  // TODO: contacts later. Phone: shown by button only; e-mail: protected component.
+  organizers: [
+    { name: 'Ольга', place: 'США' },
+    { name: 'Михаил', place: 'Загреб' },
+    { name: 'Екатерина', place: 'Москва' },
   ],
 
   // Testimonials published on official Art of Living pages (artofliving.by, reviews), text only, no photos.
   testimonials: [
     {
       text: 'Я шла на первый курс без какого-либо ожидания от результатов и не понимала, что ожидает в процессе. Если описать кратко, то это будет: дыхательные практики, много дыхательных практик, немного телесного контакта, щепотка дурачества, ложка разговоров о философии и психологии, приятные сюрпризы.',
-      name: 'Evgenia',
+      name: 'Евгения',
       place: 'Беларусь',
       sourceUrl: 'https://www.artofliving.by/',
     },
     {
       text: 'Счастлива, что в своё время попала на курс Искусства жизни :-) Всегда удивляюсь, как простые упражнения приносят глубокий покой и в то же время радость, пробуждают креативность и интуитивные способности, превращают негативную энергию (гнев, ревность, жадность) в позитивную.',
-      name: 'Olga B.',
+      name: 'Ольга Б.',
       place: 'Беларусь',
       sourceUrl: 'https://www.artofliving.by/',
     },
     {
       text: 'Ходила на курс Счастье. Очень здорово, посмотрела на жизнь под другим углом и стала более позитивной.',
-      name: 'Aleksandra B.',
+      name: 'Александра Б.',
       place: 'Беларусь',
       sourceUrl: 'https://www.artofliving.by/',
     },

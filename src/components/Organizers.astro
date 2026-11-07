@@ -1,0 +1,36 @@
+---
+// 10. «Контакты организаторов» (teachers are not named on the site). Contacts later, only with consent.
+// Phone/WhatsApp/e-mail are NOT rendered here on purpose: add RevealPhone / Protected components
+// (site_tech_playbook §7) when the team sends them. Telegram username is shown as a link.
+import { t } from '../i18n/ui';
+import { copy } from '../i18n/copy.ru';
+import { course } from '../data/course.ru';
+import RoundPhoto from './RoundPhoto.astro';
+
+const c = copy.organizers;
+---
+
+<section id="contacts" class="bg-surface py-[var(--spacing-section)]" aria-labelledby="contacts-title">
+  <div class="container-site">
+    <h2 id="contacts-title" class="h2">{c.title}</h2>
+    <p class="mt-4">{c.text}</p>
+    <ul class="mt-10 grid gap-10 sm:grid-cols-3" role="list">
+      {
+        course.organizers.map((o) => (
+          <li class="flex flex-col items-center text-center">
+            <RoundPhoto placeholder={o.name.charAt(0)} class="size-32" />
+            <p class="mt-4 text-xl font-medium">{o.name}</p>
+            <p class="text-muted">{o.place}</p>
+            {o.telegram ? (
+              <a class="link mt-2" href={`https://t.me/${o.telegram}`} target="_blank" rel="noopener">
+                Telegram: @{o.telegram}
+              </a>
+            ) : (
+              <p class="mt-2 text-sm text-muted">{t('organizers.soon')}</p>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

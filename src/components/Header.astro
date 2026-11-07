@@ -7,10 +7,10 @@ import Logo from './Logo.astro';
 
 <header class="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/85">
   <div class="container-site flex h-16 items-center justify-between gap-2 sm:gap-3">
-    <a href={url()} class="flex min-w-0 items-center gap-3 no-underline" aria-label={`The Art of Living · ${course.brandTitle}`}>
+    <a href={url()} class="flex min-w-0 items-center gap-3 no-underline" aria-label={`The Art of Living · ${course.title}`}>
       <Logo variant="compact" class="h-10" />
       <span class="hidden border-l border-line pl-3 leading-tight sm:block">
-        <span class="block text-base font-medium text-ink">{course.brandTitle}</span>
+        <span class="block text-base font-medium text-ink">{course.title}</span>
         <span class="block text-xs text-muted">{t('header.brand.sub')}</span>
       </span>
     </a>

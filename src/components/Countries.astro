@@ -26,7 +26,7 @@ const flagFor = (code: string) => flags[`../assets/flags/${code}.svg`]?.default;
               {flag && (
                 <img
                   src={flag.src}
-                  alt=""
+                  alt={`${t('flag')}: ${c.name}`}
                   width="48"
                   height="36"
                   class="h-9 w-12 shrink-0 rounded-sm object-cover ring-1 ring-line"
