@@ -91,10 +91,9 @@ export const course: Course = {
   ],
 
   // Registration forms («Первый шаг», «Ближайший курс») → Google Apps Script web app → owner's Google Sheet.
-  // TODO: webAppUrl = 'https://script.google.com/macros/s/…/exec' (from the owner after deployment).
   // Fallback links (Google Forms) are shown without JavaScript.
   forms: {
-    webAppUrl: null,
+    webAppUrl: 'https://script.google.com/macros/s/AKfycbyrybdy047K9j62bGPyyqi7QIyF3GN80ondv21u_WvHgqLyCbgzgcCtlIsh_MbFwE_wFg/exec',
     introFallbackUrl: null,
     nextCourseFallbackUrl: null,
   },

@@ -58,7 +58,7 @@ const messengers = ['Telegram', 'WhatsApp', 'Viber'];
               autocomplete="tel"
               required
               maxlength="25"
-              pattern="\+?[0-9][0-9\s().\-]{6,20}"
+              pattern="\+?[0-9][0-9\s\(\)\.\-]{6,20}"
               aria-describedby={`${id}-phone-hint`}
             />
             <p class="mt-1 text-xs text-muted" id={`${id}-phone-hint`}>{t('form.phone.hint')}</p>
