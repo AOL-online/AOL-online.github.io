@@ -1,66 +1,100 @@
-// Shape of a course data file (src/data/course.<lang>.ts).
+// Shape of the course data file (src/data/course.ru.ts).
 // Next course run = edit only the data file, never the components.
+// All times: ISO 8601 with offset, e.g. '2026-11-13T18:00:00+03:00'. Shown per city with Intl at build time.
 
-/** One course session. `start` is ISO 8601 with offset, e.g. '2026-11-13T18:00:00+01:00'. */
+/** Different start for one region on one day (e.g. North America on Friday). */
+export interface SessionOverride {
+  /** Name shown on the page, e.g. 'Северная Америка'. */
+  region: string;
+  /** IANA zone prefix the override applies to, e.g. 'America/'. */
+  zonePrefix: string;
+  start: string;
+}
+
 export interface Session {
-  /** Calendar date of the session in the course time zone, 'YYYY-MM-DD'. */
+  /** Day in the course time zone, 'YYYY-MM-DD'. */
   date: string;
-  /** Start time with offset; null = not known yet (page shows "time TBA"). */
+  /** Start (ISO with offset); null = not known yet, page shows "время уточняется". */
   start: string | null;
-  /** Length in minutes. */
   durationMin: number;
+  overrides?: SessionOverride[];
+}
+
+export interface City {
+  name: string;
+  /** IANA zone, e.g. 'Europe/Moscow'. */
+  tz: string;
 }
 
 export interface Country {
-  /** ISO 3166-1 alpha-2, lower case: used for the flag image (flag-icons). */
+  /** ISO 3166-1 alpha-2, lower case: flag file src/assets/flags/<code>.svg. */
   code: string;
   name: string;
   /** Registration page in the Art of Living system of that country. */
   url: string;
 }
 
+/**
+ * How people register for the intro talk.
+ * - none:  button stub "registration opens soon"
+ * - link:  button to an external page (Zoom registration, Tally, …)
+ * - embed: form embedded in the page (iframe URL, e.g. Tally embed) + fallback link
+ */
+export type Registration =
+  | { kind: 'none' }
+  | { kind: 'link'; url: string }
+  | { kind: 'embed'; url: string; height?: number };
+
 export interface IntroTalk {
-  /** ISO start with offset, or null if not known yet. */
-  start: string | null;
+  title: string;
+  start: string;
   durationMin: number;
-  /** Registration / join link. If null the talk is listed without a button. */
-  url: string | null;
+  registration: Registration;
 }
 
 export interface Teacher {
   name: string;
+  /** City / country, e.g. 'Загреб'. */
+  place: string;
   role: string;
-  /** Optional short bio. */
   bio?: string;
+  /** Photo file in src/assets/teachers/ (only with consent). */
+  photo?: string;
+  /** Contacts — only with consent. Phone is shown by button only; e-mail via a protected component. */
+  telegram?: string;
+  phone?: string;
+  email?: string;
+}
+
+export interface Testimonial {
+  text: string;
+  name: string;
+  /** City / country or other short note. */
+  place?: string;
+  /** Page where the testimonial was published (official AoL page). */
+  sourceUrl: string;
 }
 
 export interface Contacts {
-  /** Telegram username without @, or null. */
   telegram: string | null;
-  /** Public e-mail, or null. Never publish personal e-mails here. */
   email: string | null;
-}
-
-export interface TimeZoneRow {
-  label: string;
-  /** IANA zone name, e.g. 'Europe/Moscow'. */
-  tz: string;
 }
 
 export interface Course {
   title: string;
   subtitle: string;
-  /** First and last day, 'YYYY-MM-DD'. */
   startDate: string;
   endDate: string;
-  /** IANA time zone in which the course is organised (main zone on the page). */
-  timeZone: string;
+  /** Zone in which times are announced ('по Москве'). */
+  mainTimeZone: string;
+  mainTimeZoneLabel: string;
   sessions: Session[];
-  /** Rows of the time-zone table (first row = main zone). */
-  timeZoneTable: TimeZoneRow[];
+  /** Cities of the time tables, in display order. */
+  cities: City[];
   countries: Country[];
-  /** Free intro talks. Empty array = block shows "coming soon". */
+  /** Next free intro talk(s); first one is the main call on the first screen. Empty = hidden. */
   introTalks: IntroTalk[];
   teachers: Teacher[];
+  testimonials: Testimonial[];
   contacts: Contacts;
 }

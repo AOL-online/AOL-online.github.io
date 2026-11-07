@@ -1,54 +1,45 @@
-// Languages and interface strings. Components never contain text: use t('key').
+// Interface strings. The site is Russian only (root, no language prefixes);
+// strings live in this dictionary so other languages can be added later.
 
-export const languages = {
-  ru: { label: 'Русский', htmlLang: 'ru', ogLocale: 'ru_RU', intl: 'ru-RU' },
-  en: { label: 'English', htmlLang: 'en', ogLocale: 'en_GB', intl: 'en-GB' },
-  hr: { label: 'Hrvatski', htmlLang: 'hr', ogLocale: 'hr_HR', intl: 'hr-HR' },
-} as const;
-
-export type Lang = keyof typeof languages;
-
-export const defaultLang: Lang = 'ru';
-
-/** Languages that are built and published. Others are prepared but not built. */
-export const published: Lang[] = ['ru'];
-
-/**
- * Whether the default language gets its own URL prefix.
- * GitHub Pages (base /ru): false -> Russian page is the site root https://aol-online.github.io/ru/
- * Own domain (base /):     true  -> https://domain/ru/, and / redirects to /ru/
- */
-export const prefixDefaultLang = (import.meta.env.PREFIX_DEFAULT_LANG ?? 'false') === 'true';
+export const lang = { htmlLang: 'ru', ogLocale: 'ru_RU' } as const;
 
 const ru = {
   'meta.title': 'Программа Счастье — онлайн-курс Art of Living на русском, 13–15 ноября',
   'meta.description':
-    'Программа Счастье (Art of Living, Часть 1) онлайн на русском: Сударшан Крия™, йога и медитация. 3 дня по 3 часа в Zoom с сертифицированным учителем. Регистрация в вашей стране.',
+    'Бесплатное вводное занятие «Первый шаг» и курс «Программа Счастье» (Art of Living, Часть 1) онлайн на русском: Сударшан Крия™, йога и медитация. 3 дня по 3 часа в Zoom.',
 
   'skip': 'Перейти к содержанию',
   'header.brand.sub': 'Art of Living · онлайн',
   'header.cta': 'Записаться',
+  'theme.toDark': 'Включить тёмную тему',
+  'theme.toLight': 'Включить светлую тему',
 
   'cta.register': 'Записаться на курс',
-  'cta.tryFree': 'Сначала попробовать бесплатно',
 
-  'hero.lead': 'Исследуйте секреты дыхания и начните управлять своим умом.',
-  'hero.text':
-    'Три дня с Сударшан Крией™, йогой и медитацией — живой курс в Zoom с сертифицированным учителем.',
-  'hero.dates.label': 'Даты',
-  'hero.time.label': 'Время',
-  'hero.format.label': 'Формат',
-  'hero.format.value': '3 дня по 3 часа · Zoom',
-  'hero.photoAlt': 'Группа людей выполняет дыхательную практику на природе',
+  'intro.eyebrow': 'Бесплатное вводное занятие онлайн',
+  'intro.text':
+    'За 60 минут вы попробуете дыхательную практику и медитацию, узнаете, как устроен курс «Программа Счастье», и зададите вопросы учителю.',
+  'intro.format': 'Zoom · бесплатно',
+  'intro.cities': 'Время в вашем городе',
+  'intro.button': 'Записаться на «Первый шаг»',
+  'intro.soon': 'Регистрация откроется здесь в ближайшее время.',
+  'intro.form.title': 'Регистрация на «Первый шаг»',
+  'intro.form.fallback': 'Форма не загрузилась? Откройте её в новой вкладке',
+  'intro.photoAlt': 'Группа людей выполняет дыхательную практику на природе',
 
+  'local.label': 'Ваше местное время',
+
+  'course.eyebrow': 'Курс',
+  'course.time': '{time} {zone} · 3 дня по 3 часа · Zoom',
+  'course.na': '{region}: пятница {fri}; суббота и воскресенье — вместе со всеми, {weekend}.',
+  'course.text': 'Сударшан Крия™, йога, медитация и знание об уме — живой курс с сертифицированными учителями.',
   'time.tba': 'время уточняется',
 
   'countries.title': 'Выберите страну регистрации',
   'countries.text':
-    'Это общий международный поток на русском языке. Выберите свою страну: регистрация и оплата проходят в системе Art of Living этой страны.',
+    'Это общий международный поток на русском языке. Регистрация и оплата проходят в системе Art of Living выбранной страны.',
   'countries.price': 'Стоимость указана на странице регистрации вашей страны.',
-  'countries.hint.withContacts': 'Живёте в другой стране? Выберите любую удобную регистрацию или напишите нам.',
-  'countries.hint': 'Живёте в другой стране? Выберите любую удобную регистрацию.',
+  'countries.hint': 'Выберите любую удобную регистрацию — неважно, в какой стране вы живёте.',
   'countries.button': 'Регистрация',
   'countries.newTab': 'откроется в новой вкладке',
 
@@ -62,9 +53,7 @@ const ru = {
 
 export type UiKey = keyof typeof ru;
 
-// en/hr: prepared for later; missing keys fall back to Russian.
-const ui: Record<Lang, Partial<Record<UiKey, string>>> = { ru, en: {}, hr: {} };
-
-export function useTranslations(lang: Lang) {
-  return (key: UiKey): string => ui[lang][key] ?? ru[key];
+/** Translate; `{name}` placeholders are filled from vars. */
+export function t(key: UiKey, vars: Record<string, string> = {}): string {
+  return ru[key].replace(/\{(\w+)\}/g, (_, k: string) => vars[k] ?? '');
 }

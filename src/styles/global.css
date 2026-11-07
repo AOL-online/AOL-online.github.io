@@ -1,9 +1,10 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/nunito-sans';
 
-/* Design tokens. Change the palette here only.
-   Contrast (WCAG): accent-text on white 5.50:1, on surface 5.09:1; muted on white 5.41:1.
-   accent (#7677F4, from artofliving.org/hr-hr icons) is 3.67:1 on white -> fills, icons, lines only, never text. */
+/* Design tokens. Change the palette here only (light in @theme, dark below).
+   accent #7677F4 (artofliving.org/hr-hr icons) = fills, icons, lines only, never text.
+   Contrast (WCAG), light: ink 16.9, muted 5.4, accent-text 5.5 on paper; white on btn 5.5.
+                    dark:  ink 16.0, muted 8.2, accent-text 8.5 on paper; on-btn on btn 8.5. */
 @theme {
   --color-ink: #1d1d1b;
   --color-paper: #ffffff;
@@ -13,11 +14,13 @@
   --color-accent: #7677f4;
   --color-accent-soft: #efeefe;
   --color-accent-text: #5052f1;
-  --color-accent-strong: #3d3fd6;
+  --color-btn: #5052f1;
+  --color-btn-hover: #3d3fd6;
+  --color-on-btn: #ffffff;
 
   --font-sans: 'Nunito Sans Variable', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
 
-  --text-display: clamp(2.5rem, 1.6rem + 4vw, 4.75rem);
+  --text-display: clamp(2.5rem, 1.6rem + 4vw, 4.5rem);
   --text-h2: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
   --text-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
 
@@ -26,7 +29,37 @@
   --container-site: 75rem;
 }
 
+/* Dark tokens: used when the visitor chose dark, or the system is dark and nothing was chosen. */
 @layer base {
+  :root[data-theme='dark'] {
+    --color-ink: #f2f1ed;
+    --color-paper: #161615;
+    --color-surface: #201f1e;
+    --color-line: #3a3936;
+    --color-muted: #b0aea8;
+    --color-accent-soft: #25254a;
+    --color-accent-text: #a9aaff;
+    --color-btn: #a9aaff;
+    --color-btn-hover: #c4c5ff;
+    --color-on-btn: #161615;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --color-ink: #f2f1ed;
+      --color-paper: #161615;
+      --color-surface: #201f1e;
+      --color-line: #3a3936;
+      --color-muted: #b0aea8;
+      --color-accent-soft: #25254a;
+      --color-accent-text: #a9aaff;
+      --color-btn: #a9aaff;
+      --color-btn-hover: #c4c5ff;
+      --color-on-btn: #161615;
+      color-scheme: dark;
+    }
+  }
+
   :root {
     color-scheme: light;
   }
@@ -49,6 +82,10 @@
   [id] {
     scroll-margin-top: 5rem;
   }
+  /* Elements that need JS are hidden until the inline script marks <html class="js">. */
+  html:not(.js) .js-only {
+    display: none !important;
+  }
 }
 
 @layer components {
@@ -66,7 +103,7 @@
     min-height: 3rem;
     padding: 0.75rem 1.75rem;
     border-radius: 999px;
-    border: 2px solid var(--color-accent-text);
+    border: 2px solid var(--color-btn);
     font-weight: 700;
     line-height: 1.2;
     text-align: center;
@@ -74,19 +111,26 @@
     transition: background-color 0.15s, border-color 0.15s, color 0.15s;
   }
   .btn-primary {
-    background: var(--color-accent-text);
-    color: #fff;
+    background: var(--color-btn);
+    color: var(--color-on-btn);
   }
   .btn-primary:hover {
-    background: var(--color-accent-strong);
-    border-color: var(--color-accent-strong);
+    background: var(--color-btn-hover);
+    border-color: var(--color-btn-hover);
   }
   .btn-secondary {
     background: var(--color-paper);
+    border-color: var(--color-accent-text);
     color: var(--color-accent-text);
   }
   .btn-secondary:hover {
     background: var(--color-accent-soft);
+  }
+  .btn[aria-disabled='true'] {
+    cursor: default;
+    background: var(--color-surface);
+    border-color: var(--color-line);
+    color: var(--color-muted);
   }
   .link {
     color: var(--color-accent-text);
@@ -94,7 +138,7 @@
     text-underline-offset: 3px;
   }
   .link:hover {
-    color: var(--color-accent-strong);
+    text-decoration-thickness: 2px;
   }
 }
 

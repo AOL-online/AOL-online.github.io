@@ -1,0 +1,29 @@
+---
+// Intro-talk registration button: stub, external link, or jump to the embedded form (IntroForm).
+import { t } from '../i18n/ui';
+import type { Registration } from '../data/types';
+
+interface Props {
+  registration: Registration;
+}
+const { registration: r } = Astro.props;
+---
+
+{
+  r.kind === 'link' ? (
+    <a href={r.url} target="_blank" rel="noopener" class="btn btn-primary text-lg">
+      {t('intro.button')}
+    </a>
+  ) : r.kind === 'embed' ? (
+    <a href="#intro-form" class="btn btn-primary text-lg">
+      {t('intro.button')}
+    </a>
+  ) : (
+    <div>
+      <span class="btn text-lg" aria-disabled="true">
+        {t('intro.button')}
+      </span>
+      <p class="mt-2 text-sm text-muted">{t('intro.soon')}</p>
+    </div>
+  )
+}

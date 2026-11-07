@@ -4,16 +4,16 @@ One-page Russian landing for the online Happiness Program (Art of Living, Part 1
 Astro 7 + Tailwind CSS 4 + TypeScript strict, static, deployed to GitHub Pages by `.github/workflows/deploy.yml` on push to `main`.
 
 ## Where things are
-- `src/data/course.ru.ts` — ALL course data (dates, session times, countries + registration links, intro talks, teachers, contacts). Next course run = edit only this file.
-- `src/data/types.ts` — data shape. `src/i18n/ui.ts` — languages and interface strings (components contain no text).
-- `src/lib/time.ts` — dates/times are computed at build time from ISO times with `Intl` (time zones by IANA name).
-- `src/lib/url.ts` — always build internal links with `url()` / `langPath()` (base path!), never `href="/..."`.
-- `src/styles/global.css` — design tokens in `@theme`. `accent` is for fills/icons only; text and white-text buttons use `accent-text` (≥4.5:1).
+- `src/data/course.ru.ts` — ALL course data (dates, sessions + regional overrides, cities, countries + registration links, intro talk + registration kind none/link/embed, teachers, testimonials, contacts). Next course run = edit only this file.
+- `src/data/types.ts` — data shape. `src/i18n/ui.ts` — interface strings via `t()` (components contain no text). Russian only, site in the root, no language prefixes.
+- `src/lib/time.ts` — dates/times computed at build time from ISO times with `Intl` (IANA zones). `src/lib/local-time.ts` — client script for "your local time" (hidden without JS).
+- `src/lib/url.ts` — build internal links with `url()`, never `href="/..."`.
+- `src/styles/global.css` — design tokens in `@theme` (light) + dark overrides (`[data-theme=dark]` and `prefers-color-scheme`). `accent` is for fills/icons only; text uses `accent-text`, buttons `btn`/`on-btn` (≥4.5:1 in both themes).
+- Theme: system by default; toggle in the header saves `localStorage.theme`; inline script in `Base.astro` sets `data-theme` before paint (no flash).
 - `src/assets/flags/<code>.svg` — country flags (from `flag-icons`, MIT). New country: copy `node_modules/flag-icons/flags/4x3/<code>.svg` here.
 
 ## Address
-Env vars: `SITE_URL`, `BASE_PATH`, `PREFIX_DEFAULT_LANG`. GitHub Pages: `https://aol-online.github.io` + `/ru` + `false`.
-Own domain: `https://<domain>` + `/` + `true` (Russian page moves to `/ru/`, root redirects), plus `public/CNAME`.
+Repo `AOL-online/AOL-online.github.io`, base always `/`. Env `SITE_URL`: now `https://aol-online.github.io`, at launch `https://artofliving.page` (+ `public/CNAME`).
 
 ## Rules
 - `npm run build` (astro check + build) must pass before every commit.

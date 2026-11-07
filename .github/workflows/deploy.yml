@@ -18,10 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Own domain later: SITE_URL=https://<domain>, BASE_PATH=/, PREFIX_DEFAULT_LANG=true, add public/CNAME.
+      # At launch: SITE_URL=https://artofliving.page and add public/CNAME. BASE_PATH stays /.
       SITE_URL: https://aol-online.github.io
-      BASE_PATH: /ru
-      PREFIX_DEFAULT_LANG: 'false'
+      BASE_PATH: /
     steps:
       - uses: actions/checkout@v5
       - uses: withastro/action@v5

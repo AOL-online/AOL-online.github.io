@@ -1,0 +1,56 @@
+---
+// The course right under the intro call: dates, time (Moscow), North America note, button to countries.
+import { t } from '../i18n/ui';
+import { course } from '../data/course.ru';
+import { formatDateRange, formatWeekdayRange, formatTimeRange, sessionStart, localTimeData } from '../lib/time';
+
+const tz = course.mainTimeZone;
+const first = course.sessions[0];
+const dates = `${formatDateRange(course.startDate, course.endDate)} · ${formatWeekdayRange(course.startDate, course.endDate)}`;
+const time = first?.start
+  ? t('course.time', { time: formatTimeRange(first.start, first.durationMin, tz), zone: course.mainTimeZoneLabel })
+  : t('time.tba');
+
+// Regional notes (e.g. North America): Friday separately, weekend with everyone. Computed per city.
+const notes = course.sessions.flatMap((s) =>
+  (s.overrides ?? []).map((ov) => {
+    const cities = course.cities.filter((c) => c.tz.startsWith(ov.zonePrefix));
+    const fmt = (sess: typeof s) =>
+      cities
+        .map((c) => {
+          const st = sessionStart(sess, c.tz);
+          return st ? `${formatTimeRange(st, sess.durationMin, c.tz)} ${c.name}` : '';
+        })
+        .filter(Boolean)
+        .join(' / ');
+    const others = course.sessions.filter((x) => x !== s);
+    return t('course.na', { region: ov.region, fri: fmt(s), weekend: others[0] ? fmt(others[0]) : '' });
+  }),
+);
+---
+
+<section class="bg-paper pb-[var(--spacing-section)] pt-4 md:pt-[var(--spacing-section)]" aria-labelledby="course-title">
+  <div class="container-site">
+    <div class="grid gap-8 rounded-3xl border border-line bg-surface p-6 sm:p-8 md:grid-cols-[1.1fr_1fr] md:p-10">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-wider text-accent-text">{t('course.eyebrow')}</p>
+        <h2 id="course-title" class="mt-2 text-[length:var(--text-h2)] font-extrabold leading-tight tracking-tight">
+          {course.title}
+        </h2>
+        <p class="mt-1 text-lg font-semibold text-muted">{course.subtitle}</p>
+        <p class="mt-4 text-[length:var(--text-lead)]">{t('course.text')}</p>
+      </div>
+      <div class="flex flex-col justify-center gap-4">
+        <p class="text-xl font-extrabold sm:text-2xl">{dates}</p>
+        <p class="text-lg font-semibold">{time}</p>
+        {notes.map((n) => <p class="text-sm text-muted">{n}</p>)}
+        <p class="text-sm" data-local-times={localTimeData(course.sessions)} hidden>
+          <span class="font-bold">{t('local.label')}:</span> <span data-local-out />
+        </p>
+        <div>
+          <a href="#register" class="btn btn-primary text-lg">{t('cta.register')}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

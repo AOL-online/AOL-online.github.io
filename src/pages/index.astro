@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import IntroForm from '../components/IntroForm.astro';
+import CourseBand from '../components/CourseBand.astro';
+import Countries from '../components/Countries.astro';
+import { t } from '../i18n/ui';
+---
+
+<Base title={t('meta.title')} description={t('meta.description')}>
+  <Hero />
+  <IntroForm />
+  <CourseBand />
+  <Countries />
+</Base>

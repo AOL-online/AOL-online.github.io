@@ -1,29 +1,58 @@
-import { languages, type Lang } from '../i18n/ui';
 import type { Session } from '../data/types';
 
-const intl = (lang: Lang) => languages[lang].intl;
+const LOCALE = 'ru-RU';
 
-/** '13–15 ноября 2026' (same month) or '30 ноября – 2 декабря 2026'. Dates are 'YYYY-MM-DD'. */
-export function formatDateRange(start: string, end: string, lang: Lang): string {
-  const toDate = (d: string) => new Date(`${d}T12:00:00Z`);
-  const f = new Intl.DateTimeFormat(intl(lang), { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
-  return f.formatRange(toDate(start), toDate(end));
+/** Start of a session for a zone: a regional override (e.g. North America on Friday) wins. */
+export function sessionStart(s: Session, tz: string): string | null {
+  const ov = s.overrides?.find((o) => tz.startsWith(o.zonePrefix));
+  return ov ? ov.start : s.start;
 }
 
-/** Short weekdays of the range, e.g. 'пт–вс'. */
-export function formatWeekdayRange(start: string, end: string, lang: Lang): string {
-  const f = new Intl.DateTimeFormat(intl(lang), { weekday: 'short', timeZone: 'UTC' });
+/** '18:00–21:00' in a zone. */
+export function formatTimeRange(startIso: string, durationMin: number, tz: string): string {
+  const start = new Date(startIso);
+  const end = new Date(start.getTime() + durationMin * 60_000);
+  const f = new Intl.DateTimeFormat(LOCALE, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: tz });
+  return `${f.format(start)}–${f.format(end)}`;
+}
+
+/** '18:00' in a zone. */
+export function formatTime(iso: string, tz: string): string {
+  return new Intl.DateTimeFormat(LOCALE, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: tz }).format(new Date(iso));
+}
+
+/** 'понедельник, 9 ноября' in a zone. */
+export function formatDayLong(iso: string, tz: string): string {
+  return new Intl.DateTimeFormat(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', timeZone: tz }).format(new Date(iso));
+}
+
+/** 'пн, 9 нояб.' in a zone. */
+export function formatDayShort(iso: string, tz: string): string {
+  return new Intl.DateTimeFormat(LOCALE, { weekday: 'short', day: 'numeric', month: 'short', timeZone: tz }).format(new Date(iso));
+}
+
+/** Calendar date 'YYYY-MM-DD' of an instant in a zone. */
+export function localDate(iso: string, tz: string): string {
+  return new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: tz }).format(new Date(iso));
+}
+
+/** '13–15 ноября 2026 г.' from 'YYYY-MM-DD' dates. */
+export function formatDateRange(start: string, end: string): string {
+  const d = (x: string) => new Date(`${x}T12:00:00Z`);
+  return new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).formatRange(d(start), d(end));
+}
+
+/** 'пт–вс' from 'YYYY-MM-DD' dates. */
+export function formatWeekdayRange(start: string, end: string): string {
+  const f = new Intl.DateTimeFormat(LOCALE, { weekday: 'short', timeZone: 'UTC' });
   return `${f.format(new Date(`${start}T12:00:00Z`))}–${f.format(new Date(`${end}T12:00:00Z`))}`;
 }
 
-/** '18:00–21:00' of a session in a time zone, or null when the start is unknown. */
-export function formatSessionTime(s: Session, tz: string, lang: Lang): string | null {
-  if (!s.start) return null;
-  const start = new Date(s.start);
-  const end = new Date(start.getTime() + s.durationMin * 60_000);
-  const f = new Intl.DateTimeFormat(intl(lang), { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: tz });
-  return f.formatRange(start, end);
+/** Data for the "your local time" script (no personal data, only times). */
+export function localTimeData(sessions: { start: string | null; durationMin: number; overrides?: Session['overrides'] }[]): string {
+  return JSON.stringify(
+    sessions
+      .filter((s) => s.start)
+      .map((s) => ({ s: s.start, d: s.durationMin, o: (s.overrides ?? []).map((o) => ({ p: o.zonePrefix, s: o.start })) })),
+  );
 }
-
-/** True when every session has a known start. */
-export const allTimesKnown = (sessions: Session[]) => sessions.length > 0 && sessions.every((s) => s.start);
