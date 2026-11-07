@@ -1,21 +1,23 @@
 ---
 import { t } from '../i18n/ui';
 import { course } from '../data/course.ru';
+import Logo from './Logo.astro';
 const { telegram } = course.contacts;
 // E-mail is intentionally not rendered yet: when the team decides on a public e-mail,
 // add a protected (script-assembled) component — see site_tech_playbook §7.
 ---
 
 <footer class="border-t border-line bg-surface">
-  <div class="container-site grid gap-8 py-12 text-sm md:grid-cols-[2fr_1fr]">
+  <div class="container-site grid gap-8 py-12 text-sm md:grid-cols-[auto_2fr_1fr] md:items-start">
+    <Logo variant="main" class="h-24" />
     <div class="space-y-2">
-      <p class="text-base font-extrabold">{course.title}</p>
-      <p class="font-semibold">{t('footer.status')}</p>
+      <p class="text-base font-medium">{course.brandTitle} · {course.title}</p>
+      <p class="font-medium">{t('footer.status')}</p>
       <p class="text-muted">{t('footer.registration')}</p>
       <p class="text-muted">{t('footer.medical')}</p>
     </div>
     <div class="space-y-2">
-      <p class="font-bold">{t('footer.contacts')}</p>
+      <p class="font-medium">{t('footer.contacts')}</p>
       {
         telegram ? (
           <p>

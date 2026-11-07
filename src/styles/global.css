@@ -1,10 +1,8 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/nunito-sans';
-@import '@fontsource-variable/caveat';
 
-/* Brand fonts (brandbook «Искусство жизни»): Certa Sans = text, Art of Living Script = 3–5 big headings.
-   Files: public/fonts/brand/*.woff2 (subset Latin + Latin Ext + Cyrillic). Not in git until the font
-   licence for web use is confirmed; without them the fallbacks below are used (Nunito Sans, Caveat). */
+/* Brand fonts (brandbook «Искусство жизни», public use allowed by MV 2026-11-07):
+   Certa Sans (Light = text, Medium = headings) and Art of Living Script (3–5 big headings).
+   Files: public/fonts/brand/*.woff2 (subset Latin + Latin Ext + Cyrillic; CFF seac glyphs decomposed). */
 @font-face {
   font-family: 'Certa Sans';
   src: url('/fonts/brand/certa-sans-light.woff2') format('woff2');
@@ -47,8 +45,8 @@
   --color-on-slate-muted: #d5dde3;
   --color-on-slate-accent: #ffa64d;
 
-  --font-sans: 'Certa Sans', 'Nunito Sans Variable', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
-  --font-script: 'AoL Script', 'Caveat Variable', cursive;
+  --font-sans: 'Certa Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-script: 'AoL Script', cursive;
 
   --text-display: clamp(2.6rem, 1.6rem + 4.4vw, 5rem);
   --text-h2: clamp(1.9rem, 1.4rem + 2.2vw, 3rem);
@@ -116,6 +114,24 @@
   }
   html:not(.js) .js-only {
     display: none !important;
+  }
+  /* Theme-specific images (logo): light version by default, dark version in the dark theme. */
+  .theme-dark-only {
+    display: none !important;
+  }
+  :root[data-theme='dark'] .theme-dark-only {
+    display: block !important;
+  }
+  :root[data-theme='dark'] .theme-light-only {
+    display: none !important;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .theme-dark-only {
+      display: block !important;
+    }
+    :root:not([data-theme='light']) .theme-light-only {
+      display: none !important;
+    }
   }
 }
 

@@ -1,0 +1,23 @@
+---
+// Art of Living logo (brandbook files). compact = without descriptor (header), main = with descriptor (footer).
+// Light/dark versions are switched by the theme (CSS: .theme-light-only / .theme-dark-only).
+import compactLight from '../assets/brand/logo-compact-light.svg';
+import compactDark from '../assets/brand/logo-compact-dark.svg';
+import mainLight from '../assets/brand/logo-main-light.svg';
+import mainDark from '../assets/brand/logo-main-dark.svg';
+
+interface Props {
+  variant?: 'compact' | 'main';
+  class?: string;
+}
+const { variant = 'compact', class: cls = '' } = Astro.props;
+const [light, dark, ratio] =
+  variant === 'compact' ? [compactLight, compactDark, 288.94 / 121.63] : [mainLight, mainDark, 288.94 / 185.09];
+const h = variant === 'compact' ? 40 : 96;
+const w = Math.round(h * ratio);
+---
+
+<span class:list={['inline-block', cls]}>
+  <img src={light.src} width={w} height={h} alt="The Art of Living" class="theme-light-only block h-full w-auto" />
+  <img src={dark.src} width={w} height={h} alt="The Art of Living" class="theme-dark-only block h-full w-auto" />
+</span>

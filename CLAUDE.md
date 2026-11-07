@@ -10,7 +10,8 @@ Astro 7 + Tailwind CSS 4 + TypeScript strict, static, deployed to GitHub Pages b
 - `src/lib/url.ts` — build internal links with `url()`, never `href="/..."`.
 - `src/styles/global.css` — design tokens in `@theme` (light) + dark overrides (`[data-theme=dark]` and `prefers-color-scheme`). Brandbook palette: orange `accent` #ff8400 for fills/icons/underlines only; text uses `accent-text`; buttons orange with dark text (`btn`/`on-btn`); slate blue block `.on-slate`. ≥4.5:1 in both themes.
 - `src/i18n/copy.ru.ts` — page texts (blocks). `src/components/ScriptTitle.astro` — handwritten heading + orange underline (3–5 headings only).
-- Fonts: Certa Sans + Art of Living Script in `public/fonts/brand/` (WOFF2 subsets, seac glyphs decomposed). Not committed until the web licence is confirmed; fallbacks Nunito Sans / Caveat.
+- Fonts: Certa Sans + Art of Living Script in `public/fonts/brand/` (WOFF2 subsets, CFF seac glyphs decomposed — otherwise Chrome drops the space after «ё»). Public use allowed by the owner.
+- Logo: `src/components/Logo.astro` — compact (header) / main with descriptor (footer), light/dark versions by theme.
 - `public/files/sudarshan-kriya-research-ru.pdf` — research brochure (contains AoL research e-mails, allowed in the hook).
 - Theme: system by default; toggle in the header saves `localStorage.theme`; inline script in `Base.astro` sets `data-theme` before paint (no flash).
 - `src/assets/flags/<code>.svg` — country flags (from `flag-icons`, MIT). New country: copy `node_modules/flag-icons/flags/4x3/<code>.svg` here.
