@@ -51,14 +51,7 @@ export const course: Course = {
   ],
 
   // Free intro talk «Первый шаг»: Mon 9 Nov 18:30 Moscow, 1 hour, Zoom. Registration: forms below.
-  introTalks: [
-    {
-      title: 'За пределами обычного дыхания',
-      subtitle: 'Бесплатное онлайн-занятие «Первый шаг»',
-      start: '2026-11-09T18:30:00+03:00',
-      durationMin: 60,
-    },
-  ],
+  introTalks: [],
 
   // Contacts of the organisers (teachers are NOT named on the site — organisers' decision 2026-11-07).
   // TODO: contacts later. Phone: shown by button only; e-mail: protected component.
