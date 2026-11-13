@@ -1,0 +1,389 @@
+---
+/**
+ * Hidden teachers page — /t-room/
+ *
+ * NOT in navigation, sitemap or robots.txt allowlist.
+ * Access: direct URL only. Protected by a shared client-side password.
+ *
+ * To change the password, run:
+ *   node -e "const c=require('crypto');console.log(c.createHash('sha256').update('НовыйПароль').digest('hex'))"
+ * Paste the new hex hash into PASSWORD_HASH below.
+ */
+
+import logoLight from '../../assets/brand/logo-compact-light.svg';
+import logoDark  from '../../assets/brand/logo-compact-dark.svg';
+
+const PASSWORD_HASH = '92e38083af9dbdd5eb2795a50d3c9e24dac14a3ab6d3778c0ec649ee0d87c61e';
+
+// Materials list — edit as needed.
+// href: path relative to /public (served at root), or an absolute external URL.
+const materials: { label: string; href: string }[] = [
+  // { label: 'Слайды — Положения курса', href: '/files/teachers/polozheniya.pdf' },
+  // { label: 'Слайды — ДЗ 1 день', href: '/files/teachers/dz1.jpg' },
+];
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Материалы для учителей</title>
+    <style>
+      /* Brand fonts */
+      @font-face {
+        font-family: 'Certa Sans';
+        src: url('/fonts/brand/certa-sans-light.woff2') format('woff2');
+        font-weight: 100 450;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Certa Sans';
+        src: url('/fonts/brand/certa-sans-medium.woff2') format('woff2');
+        font-weight: 451 900;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'AoL Script';
+        src: url('/fonts/brand/aol-script-regular.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      /* Design tokens — mirroring global.css */
+      :root {
+        --ink: #1d1d1b;
+        --paper: #ffffff;
+        --surface: #f7f6f3;
+        --line: #e4e2dc;
+        --muted: #6b6a66;
+        --accent: #ff8400;
+        --accent-text: #ab5800;
+        --btn: #ff8400;
+        --btn-hover: #ff9a33;
+        --on-btn: #1d1d1b;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #f3f1ec;
+          --paper: #16222c;
+          --surface: #1f2f3c;
+          --line: #34495a;
+          --muted: #b8c2ca;
+          --accent-text: #ffa64d;
+          color-scheme: dark;
+        }
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1.25rem 3rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: 'Certa Sans', system-ui, Arial, sans-serif;
+        font-weight: 300;
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 36rem;
+      }
+
+      /* Logo */
+      .logo-wrap {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2.5rem;
+      }
+      .logo-wrap img {
+        height: 3rem;
+        width: auto;
+      }
+      /* Show correct logo for theme */
+      .logo-dark { display: none; }
+      @media (prefers-color-scheme: dark) {
+        .logo-light { display: none; }
+        .logo-dark  { display: block; }
+      }
+
+      /* Heading */
+      .page-title {
+        font-family: 'AoL Script', cursive;
+        font-weight: 400;
+        font-size: clamp(2rem, 1.4rem + 2.5vw, 3rem);
+        line-height: 1.1;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+      .page-sub {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.9375rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Password gate */
+      #gate {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        padding: 2rem 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      #gate label {
+        font-weight: 500;
+        font-size: 0.9375rem;
+      }
+      #gate input {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 1.5px solid var(--line);
+        border-radius: 0.5rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      #gate input:focus {
+        border-color: var(--accent-text);
+      }
+      #gate input.error {
+        border-color: #d9534f;
+      }
+      .error-msg {
+        color: #d9534f;
+        font-size: 0.875rem;
+        display: none;
+      }
+      .error-msg.visible { display: block; }
+
+      .btn-unlock {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 3rem;
+        padding: 0 2rem;
+        border-radius: 999px;
+        border: 2px solid var(--btn);
+        background: var(--btn);
+        color: var(--on-btn);
+        font-family: inherit;
+        font-weight: 500;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s;
+        align-self: stretch;
+      }
+      .btn-unlock:hover { background: var(--btn-hover); border-color: var(--btn-hover); }
+      .btn-unlock:active { opacity: 0.9; }
+
+      /* Materials section (hidden until unlocked) */
+      #materials {
+        display: none;
+      }
+      #materials.visible {
+        display: block;
+      }
+
+      .section-label {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+
+      .file-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .file-list li a {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1.25rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 0.75rem;
+        text-decoration: none;
+        color: var(--ink);
+        font-size: 0.9375rem;
+        transition: border-color 0.15s, background 0.15s;
+      }
+      .file-list li a:hover {
+        border-color: var(--accent-text);
+        background: var(--paper);
+      }
+      .file-list li a .file-icon {
+        font-size: 1.25rem;
+        flex-shrink: 0;
+      }
+      .file-list li a .file-label {
+        flex: 1;
+      }
+      .file-list li a .dl-icon {
+        color: var(--muted);
+        font-size: 0.875rem;
+        flex-shrink: 0;
+      }
+
+      .empty-note {
+        color: var(--muted);
+        font-size: 0.9375rem;
+        text-align: center;
+        padding: 1.5rem;
+        border: 1px dashed var(--line);
+        border-radius: 0.75rem;
+      }
+
+      .lock-again {
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 0.875rem;
+        color: var(--muted);
+      }
+      .lock-again button {
+        background: none;
+        border: none;
+        color: var(--accent-text);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: inherit;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        padding: 0;
+      }
+      .lock-again button:hover { text-decoration-thickness: 2px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <!-- Logo -->
+      <div class="logo-wrap">
+        <img class="logo-light" src={logoLight.src} alt="Art of Living" />
+        <img class="logo-dark"  src={logoDark.src}  alt="Art of Living" />
+      </div>
+
+      <h1 class="page-title">Материалы для учителей</h1>
+      <p class="page-sub">Раздел только для команды</p>
+
+      <!-- Password gate -->
+      <div id="gate">
+        <label for="pwd-input">Введите пароль для доступа</label>
+        <input
+          id="pwd-input"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Пароль"
+          enterkeyhint="done"
+        />
+        <span id="pwd-error" class="error-msg">Неверный пароль. Попробуйте ещё раз.</span>
+        <button class="btn-unlock" id="unlock-btn" type="button">Войти</button>
+      </div>
+
+      <!-- Materials (shown after unlock) -->
+      <div id="materials">
+        <p class="section-label">Файлы для скачивания</p>
+
+        {materials.length > 0 ? (
+          <ul class="file-list">
+            {materials.map(m => (
+              <li>
+                <a href={m.href} download>
+                  <span class="file-icon">📄</span>
+                  <span class="file-label">{m.label}</span>
+                  <span class="dl-icon">↓</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="empty-note">Файлы скоро появятся здесь.</p>
+        )}
+
+        <div class="lock-again">
+          <button id="lock-btn" type="button">Закрыть сессию</button>
+        </div>
+      </div>
+
+    </div>
+
+    <script define:vars={{ PASSWORD_HASH }}>
+      const STORAGE_KEY = 'tr_unlocked';
+
+      const gate = document.getElementById('gate');
+      const materials = document.getElementById('materials');
+      const input = document.getElementById('pwd-input');
+      const errorMsg = document.getElementById('pwd-error');
+      const unlockBtn = document.getElementById('unlock-btn');
+      const lockBtn = document.getElementById('lock-btn');
+
+      async function sha256hex(str) {
+        const enc = new TextEncoder().encode(str);
+        const buf = await crypto.subtle.digest('SHA-256', enc);
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      function showUnlocked() {
+        gate.style.display = 'none';
+        materials.classList.add('visible');
+      }
+
+      function showLocked() {
+        sessionStorage.removeItem(STORAGE_KEY);
+        materials.classList.remove('visible');
+        gate.style.display = '';
+        input.value = '';
+        input.classList.remove('error');
+        errorMsg.classList.remove('visible');
+        input.focus();
+      }
+
+      // Restore session
+      if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+        showUnlocked();
+      }
+
+      async function tryUnlock() {
+        const hash = await sha256hex(input.value);
+        if (hash === PASSWORD_HASH) {
+          sessionStorage.setItem(STORAGE_KEY, '1');
+          errorMsg.classList.remove('visible');
+          input.classList.remove('error');
+          showUnlocked();
+        } else {
+          input.classList.add('error');
+          errorMsg.classList.add('visible');
+          input.select();
+        }
+      }
+
+      unlockBtn.addEventListener('click', tryUnlock);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+      lockBtn.addEventListener('click', showLocked);
+    </script>
+  </body>
+</html>
